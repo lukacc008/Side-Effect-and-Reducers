@@ -4,6 +4,7 @@ import Card from "../UI/Card/Card";
 import classes from "./Login.module.css";
 import Button from "../UI/Button/Button";
 import AuthContext from "../../store/auth-context";
+import Input from "../UI/input/input";
 
 const emailReducer = (state, action) => {
   if (action.type === "USER_INPUT") {
@@ -66,17 +67,17 @@ const Login = (props) => {
   }, [emailIsValid, passwordIsValid]);
 
   const emailChangeHandler = (event) => {
-    dispatchEmail({ type: "USER_INPUT", val: event.target.value })
+    dispatchEmail({ type: "USER_INPUT", val: event.target.value });
   };
 
-    /*
+  /*
     setFormIsValid(
       event.target.value.includes("@") && passwordState.isValid
     );
   };
     */
   const passwordChangeHandler = (event) => {
-    dispatchPassword({type:"USER_INPUT", val: event.target.value})
+    dispatchPassword({ type: "USER_INPUT", val: event.target.value });
   };
 
   //  setFormIsValid(emailState.isValid && event.target.value.trim().length > 6); };
@@ -86,7 +87,7 @@ const Login = (props) => {
   };
 
   const validatePasswordHandler = () => {
-    dispatchPassword({type: "INPUT_BLUR"})
+    dispatchPassword({ type: "INPUT_BLUR" });
   };
 
   const submitHandler = (event) => {
@@ -97,23 +98,18 @@ const Login = (props) => {
   return (
     <Card className={classes.login}>
       <form onSubmit={submitHandler}>
+        <Input
+          id="email"
+          label="E-mail"
+          type="email"
+          isValid={emailIsValid}
+          value={emailState.value}
+          onChange={emailChangeHandler}
+          onBlur={validateEmailHandler}
+        />
         <div
           className={`${classes.control} ${
-            emailState.isValid === false ? classes.invalid : ""
-          }`}
-        >
-          <label htmlFor="email">E-Mail</label>
-          <input
-            type="email"
-            id="email"
-            value={emailState.value}
-            onChange={emailChangeHandler}
-            onBlur={validateEmailHandler}
-          />
-        </div>
-        <div
-          className={`${classes.control} ${
-             passwordState.isValid === false ? classes.invalid : ""
+            passwordState.isValid === false ? classes.invalid : ""
           }`}
         >
           <label htmlFor="password">Password</label>
